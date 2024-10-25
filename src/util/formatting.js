@@ -1,0 +1,1 @@
+export const currencyFormatter = new Intl.NumberFormat('ua-UA', { style: 'currency', currency: 'UAH' });

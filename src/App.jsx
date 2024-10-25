@@ -1,9 +1,18 @@
+import Header from './components/Header';
+import Meals from './components/Meals';
+import { useFetch } from './hook/useFetch';
+import { fetchAvailableMeals } from './http';
+
+	
 function App() {
+const {isFetching, fetchedData: loadedMeals} = useFetch(fetchAvailableMeals, []);
+	
   return (
     <>
-      <h1>You got this 💪</h1>
-      <p>Stuck? Not sure how to proceed?</p>
-      <p>Don't worry - we've all been there. Let's build it together!</p>
+      <Header />
+			<main>
+				<Meals loadedMeals={loadedMeals} />
+			</main>
     </>
   );
 }
