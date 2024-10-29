@@ -40,7 +40,7 @@ export default function Cart() {
 			</ul>
 			<p className="cart-total">{currencyFormatter.format(cartTotal)}</p>
 			<p className="modal-actions">
-				<Button textOnly onClick={() => handleCloseCart()}>Close</Button>
+				<Button textOnly onClick={handleCloseCart}>Close</Button>
 				<Button onClick={handleCheckout}>Go to Checkout</Button>
 			</p>
 		</Modal>
