@@ -1,10 +1,17 @@
+import { useContext } from "react";
 import { BASE_URL } from "../http";
 import { currencyFormatter } from "../util/formatting";
 import Button from "./UI/Button";
+import CartContext from "../store/CartContext";
 
 export default function MealItem({meal}) {
+	const cartCtx = useContext(CartContext);
 
-	// const formattingPrice = new Intl.NumberFormat('ua-UA', {style : 'currency', currency: 'UAH'}).format(meal.price)
+	function handleAddMealToCart() {
+		cartCtx.addItem(meal);
+	}
+	
+
 	return (
 		<li className="meal-item">
 			<article>
@@ -15,8 +22,7 @@ export default function MealItem({meal}) {
 					<p className="meal-item-description">{meal.description}</p>
 				</div>
 				<p className="meal-item-actions">
-					<Button>Add to cart</Button>
-					{/* <button></button> */}
+					<Button onClick={handleAddMealToCart}>Add to cart</Button>
 				</p>
 			</article>
 		</li>	

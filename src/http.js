@@ -10,3 +10,21 @@ export async function fetchAvailableMeals() {
 
     return resData;
 }
+
+export async function updateUserOrders(orders) {
+    const response = await fetch(`${BASE_URL}orders`, {
+        method: 'PUT',
+        body: JSON.stringify({ orders }),
+        headers: {
+            'Content-type': 'application/json'
+        }
+    })
+    const resData = await response.json();
+
+
+    if (!response.ok) {
+        throw new Error('Failed to update user orders')
+    }
+
+    return resData.message;
+}
