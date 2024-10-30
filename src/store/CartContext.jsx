@@ -33,30 +33,32 @@ function cartReducer(state, action) {
 		};
 	}
 
-	if(action.type === 'REMOVE_ITEM') {
-		const existingCartItemIndex = state.items.findIndex(
-			(item) => item.id !== action.id
-		);
-
+	if (action.type === 'REMOVE_ITEM') {
+		const existingCartItemIndex = state.items.findIndex((item) => item.id === action.id);
+	
+		if (existingCartItemIndex === -1) {
+			return state;
+		}
+	
 		const existingCartItem = state.items[existingCartItemIndex];
-
-		if(existingCartItem.quantity === 1) {
-			const updatedItems = [...state.items];
+		const updatedItems = [...state.items];
+	
+		if (existingCartItem.quantity === 1) {
 			updatedItems.splice(existingCartItemIndex, 1);
 		} else {
 			const updatedItem = {
-				...existingCartItem, 
-				quantity: existingCartItemIndex.quantity - 1
-			}
-
+				...existingCartItem,
+				quantity: existingCartItem.quantity - 1,
+			};
 			updatedItems[existingCartItemIndex] = updatedItem;
 		}
-
+	
 		return {
 			...state,
-			items: updatedItems
-		}
+			items: updatedItems,
+		};
 	}
+	
 
 	return state;
 
