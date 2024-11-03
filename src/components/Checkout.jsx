@@ -10,6 +10,9 @@ export default function Checkout() {
 	const { items } = useContext(CartContext);
 	const { progress, hideCheckout } = useContext(UserProgressContext);
 
+
+
+
 	function handleCloseCheckout() {
 		hideCheckout();
 	}
@@ -17,24 +20,52 @@ export default function Checkout() {
 	const cartTotal = items.reduce((totalPrice, item) => {
 		return totalPrice + (item.quantity * item.price)
 	},0);
+
+	function handleSubmit(e) {
+		e.preventDefault();
+
+		const fd = new FormData(e.target);
+		const customerData = Object.fromEntries(fd.entries());
+
+		const orderData = {
+			order: {
+				items,
+				customer: customerData
+			}
+		}
+
+		
+
+		fetch('http://localhost:3000/orders', {
+			method: 'POST',
+			headers: {
+				'Content-Type' : 'application/json'
+			},
+			body: JSON.stringify(orderData)})
+			.then(() => {
+				e.target.reset();
+			})
+		
+
+	}
 	return (
 		<Modal 
 			open={progress === 'checkout'} 
 			onClose={handleCloseCheckout}
 		>
-			<form>
+			<form onSubmit={handleSubmit}>
 				<h2>Checkout</h2>
 				<p>Total amount: <b>{currencyFormatter.format(cartTotal)}</b></p>
 
 				<Input 
 					label='Full Name'
 					type='text'
-					id='full-name'
+					id='name'
 				/>
 				<Input 
 					label='Email address'
 					type='email'
-					id='email-address'
+					id='email'
 				/>
 				<Input 
 					label='Street'
