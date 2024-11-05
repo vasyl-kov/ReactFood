@@ -1,12 +1,15 @@
 import MealItem from "./MealItem";
 import Error from "./Error";
 import useHttp from "../hook/useHttp";
+import { useContext } from "react";
+import CartContext from "../store/CartContext";
 
 
 
 export default function Meals() {
 
 const { data : fetchedMeals, isLoading, error } = useHttp('http://localhost:3000/meals', null, []);
+
 
 
 if(isLoading) {
